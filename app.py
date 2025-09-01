@@ -225,10 +225,10 @@ def home():
                 n = int(limite)
                 if not A:
                     mensaje, resultado, estado = "Debe ingresar un lenguaje válido.", "{}", "danger"
-                elif n < 0:
-                    mensaje, resultado, estado = "El límite debe ser un entero positivo.", "{}", "danger"
+                elif n <= 0:
+                    mensaje, resultado, estado = "El límite es 0 por lo tanto se devuelve vacio.", "{λ}", "danger"
                 else:
-                    kleene = {""}  # incluye cadena vacía
+                    kleene = {""}  
                     actual = A.copy()
                     for i in range(1, n+1):
                         if i == 1:
@@ -237,11 +237,11 @@ def home():
                             actual = {x + y for x in actual for y in A}
                             kleene |= actual
 
-                        kleene_mostrado = [("g" if x == "" else x) for x in kleene]
+                        kleene_mostrado = [("λ" if x == "" else x) for x in kleene]
 
-                        otros = sorted([x for x in kleene_mostrado if x != "g"])
+                        otros = sorted([x for x in kleene_mostrado if x != "λ"])
 
-                        resultado = "{g" + (", " + ", ".join(otros) if otros else "") + ", ...}"
+                        resultado = "{λ" + (", " + ", ".join(otros) if otros else "") + ", ...}"
 
 
                     mensaje = f"La clausura de Kleene de {formatear_conjunto(A)} hasta {n} concatenaciones es:"
