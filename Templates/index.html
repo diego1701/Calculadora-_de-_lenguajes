@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Operación seleccionada: {{ operacion|capitalize if operacion else "Ninguna" }}</h2>
+<hr>
+
+{% if operacion %}
+<form method="POST" action="/">
+    <input type="hidden" name="operacion" value="{{ operacion }}">
+    <input type="hidden" name="categoria" value="{{ categoria }}">
+
+<!--alfabetos-->
+    {% if operacion in ["union", "interseccion", "diferencia", "diferencia_sim"] %}
+        <div class="mb-3">
+            <label class="form-label">Conjunto A (separado por comas)</label>
+            <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Conjunto B (separado por comas)</label>
+            <input type="text" class="form-control" name="B" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+    {% endif %}
+
+    {% if operacion == "pertenencia" %}
+          <div class="mb-3">
+            <label class="form-label">Conjunto A (separado por comas)</label>
+            <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Conjunto B (separado por comas)</label>
+            <input type="text" class="form-control" name="B" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Elemento a verificar</label>
+            <input type="text" class="form-control" name="elem" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+    {% elif operacion == "complemento" %}
+        <div class="mb-3">
+            <label class="form-label">Conjunto A (separado por comas)</label>
+            <input type="text" class="form-control" name="universo" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Conjunto B (separado por comas)</label>
+            <input type="text" class="form-control" name="B" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+
+    {% endif %}
+
+
+    <!--CADENAS-->
+
+    {% if categoria == "cadenas" %}
+    {% if operacion == "longitud" %}
+    <form method="POST" action="/">
+      <input type="hidden" name="operacion" value="longitud">
+      <div class="mb-3">
+        <label class="form-label">Cadena</label>
+        <input type="text" class="form-control" name="cadena" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+  
+  {% elif operacion == "concatenación" %}
+    <form method="POST" action="/">
+      <input type="hidden" name="operacion" value="concatenacion">
+      <div class="mb-3">
+        <label class="form-label">Cadena 1</label>
+        <input type="text" class="form-control" name="cadena1" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cadena 2</label>
+        <input type="text" class="form-control" name="cadena2" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+  
+  {% elif operacion == "potenciación" %}
+    <form method="POST" action="/">
+      <input type="hidden" name="operacion" value="potenciacion">
+      <div class="mb-3">
+        <label class="form-label">Cadena</label>
+        <input type="text" class="form-control" name="cadena" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Potencia (n)</label>
+        <input type="number" class="form-control" name="potencia" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+  
+  {% elif operacion == "reflexión" %}
+    <form method="POST" action="/">
+      <input type="hidden" name="operacion" value="reflexion">
+      <div class="mb-3">
+        <label class="form-label">Cadena</label>
+        <input type="text" class="form-control" name="cadena" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calcular</button>
+      {% endif %}
+    </form>
+  {% endif %}
+
+
+
+           <!--LENGUAJES-->
+
+    {% if categoria == "lenguajes" %}
+      {% if operacion == "concatenación_lenguajes" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="concatenacion">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje A (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lenguaje B (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="B" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "potenciación_lenguajes" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="potenciacion">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Potencia (n)</label>
+          <input type="number" class="form-control" name="potencia" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "reflexión_lenguajes" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="reflexion">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "unión_lenguajes" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="union_lenguajes">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje A</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lenguaje B</label>
+          <input type="text" class="form-control" name="B" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "intersección_lenguajes" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="interseccion_lenguajes">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje A</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lenguaje B</label>
+          <input type="text" class="form-control" name="B" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "resta" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="resta">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje A</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lenguaje B</label>
+          <input type="text" class="form-control" name="B" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "kleene" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="kleene">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Límite (n) de concatenaciones</label>
+          <input type="number" class="form-control" name="limite" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      {% elif operacion == "positiva" %}
+      <form method="POST" action="/">
+        <input type="hidden" name="operacion" value="positiva">
+        <input type="hidden" name="categoria" value="lenguajes">
+        <div class="mb-3">
+          <label class="form-label">Lenguaje (cadenas separadas por comas)</label>
+          <input type="text" class="form-control" name="A" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Límite (n) de concatenaciones</label>
+          <input type="number" class="form-control" name="limite" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+      {% endif %}
+    {% endif %}
+
+{% endif %}
+
+{% if resultado is not none %}
+<hr>
+<div class="alert alert-{{ estado }}">
+    <strong>{{ mensaje }}</strong> {{ resultado }}
+</div>
+{% endif %}
+
+{% endblock %}

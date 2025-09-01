@@ -1,0 +1,26 @@
+30% 2 de septiembre
+
+alfabetos
+-pertenencia A e B
+-unión A U B 
+-intersección A n B
+-Complemento B' 
+-Diferencia absoluta A/B
+-Diferencia simetrica A+b
+
+Cadenas
+
+-Longitud 
+-concatenación
+-Potenciación
+-Reflexión(inversa)
+
+Lenguajes
+-concatenación
+-potencia
+-reflexión
+-Unión
+-intersección
+-resta
+-clausula de kleene (g, combinaciones posibles, al final n En ...)
+-clausula positiva (combinaciones posibles, ...)
