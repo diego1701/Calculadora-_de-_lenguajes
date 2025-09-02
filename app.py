@@ -3,21 +3,13 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 def formatear_conjunto(conjunto):
-    """
-    Formatea un conjunto manteniendo el orden de inserción.
-    """
     if not conjunto:
         return "{}"
     return "{" + ",".join(conjunto) + "}"
 
 def crear_conjunto(texto):
-    """
-    Convierte la entrada del usuario en un conjunto que mantiene el orden.
-    Ejemplo: "B,C,A" -> ["B", "C", "A"]
-    """
     if not texto:
         return []
-    # eliminamos duplicados pero mantenemos el orden
     return list(dict.fromkeys(texto.split(",")))
 
 @app.route("/", methods=["GET", "POST"])
@@ -68,14 +60,14 @@ def home():
 
         # Complemento
         elif operacion == "complemento":
-            universo = crear_conjunto(request.form.get("universo", ""))
-            if not universo:
-                mensaje, resultado, estado = "Debe ingresar un universo válido.", "{}", "danger"
+            conjA = crear_conjunto(request.form.get("conjuntoA", ""))
+            if not conjA:
+                mensaje, resultado, estado = "Debe ingresar un conjunto válido.", "{}", "danger"
             else:
-                comp = [x for x in universo if x not in B]
+                comp = [x for x in conjA if x not in B]
                 if comp:
                     resultado = formatear_conjunto(comp)
-                    mensaje = f"El complemento de B: {formatear_conjunto(B)} respecto a U: {formatear_conjunto(universo)} es: C:"
+                    mensaje = f"El complemento de B: {formatear_conjunto(B)} respecto a A: {formatear_conjunto(conjA)} es: C:"
                 else:
                     mensaje, resultado, estado = "El complemento es vacío.", "{}", "danger"
 
@@ -106,7 +98,9 @@ def home():
         # ============================
         #  OPERACIONES de CADENAS
         # ============================
-
+        
+        
+        #longitud
         if operacion == "longitud":
             cadena = request.form.get("cadena", "")
             if not cadena:
@@ -114,7 +108,8 @@ def home():
             else:
                 resultado = f"{{{cadena}}} = {{{len(cadena)}}}"
                 mensaje = f"La longitud de la cadena es {len(cadena)} caracteres."
-
+        
+        #concatenación
         elif operacion == "concatenación":
             cadena1 = request.form.get("cadena1", "")
             cadena2 = request.form.get("cadena2", "")
@@ -124,6 +119,7 @@ def home():
                 resultado = f"{{{cadena1 + cadena2}}}"
                 mensaje = f"La concatenación de {{{cadena1}}} y {{{cadena2}}} es:"
 
+        #potenciacion
         elif operacion == "potenciación":
             cadena = request.form.get("cadena", "")
             potencia = request.form.get("potencia", "0")
@@ -139,6 +135,8 @@ def home():
             except ValueError:
                 mensaje, resultado, estado = "La potencia debe ser un número entero.", "{}", "danger"
 
+
+        #reflexión
         elif operacion == "reflexión":
             cadena = request.form.get("cadena", "")
             if not cadena:
@@ -151,6 +149,8 @@ def home():
         #  OPERACIONES de LENGUAJES
         # ============================
 
+
+        #concatenación
         elif operacion == "concatenación_lenguajes":
             if not A or not B:
                 mensaje, resultado, estado = "Debe ingresar dos lenguajes válidos.", "{}", "danger"
@@ -159,6 +159,8 @@ def home():
                 resultado = formatear_conjunto(concat)
                 mensaje = f"El resultado de la concatenación de L1: {formatear_conjunto(A)} y L2: {formatear_conjunto(B)} es:"
 
+
+        #potenciación
         elif operacion == "potenciación_lenguajes":
             potencia = request.form.get("potencia", "0")
             try:
@@ -179,6 +181,7 @@ def home():
             except ValueError:
                 mensaje, resultado, estado = "La potencia debe ser un número entero.", "{}", "danger"
 
+        #reflexión
         elif operacion == "reflexión_lenguajes":
             if not A:
                 mensaje, resultado, estado = "Debe ingresar un lenguaje válido.", "{}", "danger"
@@ -187,6 +190,7 @@ def home():
                 resultado = formatear_conjunto(reflejado)
                 mensaje = f"La reflexión (inversa) del lenguaje {formatear_conjunto(A)} es:"
 
+        #unión
         elif operacion == "unión_lenguajes":
             if not A and not B:
                 mensaje, resultado, estado = "Debe ingresar dos lenguajes válidos.", "{}", "danger"
@@ -195,6 +199,7 @@ def home():
                 resultado = formatear_conjunto(union)
                 mensaje = f"La unión de L1: {formatear_conjunto(A)} y L2: {formatear_conjunto(B)} es:"
 
+         #intersección
         elif operacion == "intersección_lenguajes":
             inter = [x for x in A if x in B]
             if inter:
@@ -203,6 +208,7 @@ def home():
             else:
                 mensaje, resultado, estado = "No hay intersección, el lenguaje es vacío.", "{}", "danger"
 
+        #resta
         elif operacion == "resta":
             if not A and not B:
                 mensaje, resultado, estado = "Debe ingresar dos lenguajes válidos.", "{}", "danger"
@@ -214,6 +220,7 @@ def home():
                 else:
                     mensaje, resultado, estado = "No hay diferencia, el lenguaje es vacío.", "{}", "danger"
 
+        #kleene
         elif operacion == "kleene":
             limite = request.form.get("limite", "0")
             try:
@@ -237,6 +244,7 @@ def home():
             except ValueError:
                 mensaje, resultado, estado = "El límite debe ser un número entero.", "{}", "danger"
 
+        #positiva
         elif operacion == "positiva":
             limite = request.form.get("limite", "0")
             try:

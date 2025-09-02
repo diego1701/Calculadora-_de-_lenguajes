@@ -16,6 +16,7 @@
   <div class="mb-3">
     <label class="form-label">Seleccione categoría</label>
     <select name="categoria" class="form-select" onchange="this.form.submit()">
+      <option value="" >Selecciona una categoria</option>
       <option value="alfabetos" {% if categoria == "alfabetos" %}selected{% endif %}>Alfabetos</option>
       <option value="cadenas" {% if categoria == "cadenas" %}selected{% endif %}>Cadenas</option>
       <option value="lenguajes" {% if categoria == "lenguajes" %}selected{% endif %}>Lenguajes</option>
@@ -67,8 +68,7 @@
     {% endif %}
   
   </div>
-  
-    <!-- Contenido principal -->
+
     <div class="col-9 p-4">
       {% block content %}{% endblock %}
     </div>
